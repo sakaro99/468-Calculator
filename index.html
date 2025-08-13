@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Hong Kong 468 Rule Calculator - Employment Contract Calculator</title>
+    <meta name="description" id="page-description" content="Calculate whether your working hours qualify for continuous employment benefits under Hong Kong's new 468 rule">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --hk-red: #d42c2c;
+            --hk-red-light: #e85555;
+            --hk-red-dark: #b91c1c;
+            --success-green: #059669;
+            --success-green-light: #10b981;
+            --warning-orange: #d97706;
+            --error-red: #dc2626;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--gray-100) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--white);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--hk-red);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .explanation {
+            text-align: left;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .explanation h2 {
+            font-size: 1.5rem;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .explanation p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: var(--gray-700);
+        }
+
+        .methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .method-card {
+            background: var(--gray-50);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--hk-red);
+        }
+
+        .method-card h3 {
+            font-size: 1.25rem;
+            color: var(--hk-red);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .method-card p {
+            font-size: 1rem;
+            color: var(--gray-700);
+            margin: 0;
+        }
+
+        main {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .calculator-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .calculator-header h2 {
+            font-size: 1.875rem;
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .calculator-subtitle {
+            color: var(--gray-600);
+            font-size: 1.1rem;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--hk-red) 0%, var(--hk-red-dark) 100%);
+            color: var(--white);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: var(--gray-50);
+        }
+
+        tbody tr:hover {
+            background-color: var(--gray-100);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .week-label {
+            font-weight: 600;
+            color: var(--gray-700);
+            min-width: 200px;
+        }
+
+        .hours-input {
+            width: 100%;
+            max-width: 120px;
+            padding: 0.75rem;
+            border: 2px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: var(--white);
+        }
+
+        .hours-input:focus {
+            outline: none;
+            border-color: var(--hk-red);
+            box-shadow: 0 0 0 3px rgba(212, 44, 44, 0.1);
+        }
+
+        .hours-input:disabled {
+            background-color: var(--gray-100);
+            border-color: var(--gray-200);
+            cursor: not-allowed;
+            color: var(--gray-500);
+        }
+
+        .hours-input.error {
+            border-color: var(--error-red);
+            background-color: #fef2f2;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .status-fulfilled {
+            background-color: #d1fae5;
+            color: var(--success-green);
+            border: 1px solid #a7f3d0;
+        }
+
+        .status-not-fulfilled {
+            background-color: #fee2e2;
+            color: var(--error-red);
+            border: 1px solid #fecaca;
+        }
+
+        .status-pending {
+            background-color: var(--gray-100);
+            color: var(--gray-500);
+            border: 1px solid var(--gray-300);
+        }
+
+        .error-message {
+            display: block;
+            color: var(--error-red);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            min-width: 140px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--hk-red) 0%, var(--hk-red-dark) 100%);
+            color: var(--white);
+            box-shadow: 0 4px 6px -1px rgba(212, 44, 44, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 8px -1px rgba(212, 44, 44, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--gray-700);
+            border: 2px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .results-summary {
+            background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--gray-200);
+            margin-top: 2rem;
+        }
+
+        .results-summary h3 {
+            font-size: 1.5rem;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .summary-card h4 {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card .value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--hk-red);
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-card .description {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .qualification-status {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 10px;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .qualification-status.qualified {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            color: var(--success-green);
+            border: 2px solid #6ee7b7;
+        }
+
+        .qualification-status.not-qualified {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            color: var(--error-red);
+            border: 2px solid #f87171;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .legend {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 0.5rem;
+            background: var(--white);
+            padding: 0.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--gray-200);
+        }
+
+        .lang-btn {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--gray-300);
+            background: var(--white);
+            color: var(--gray-600);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .lang-btn:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
+
+        .lang-btn.active {
+            background: var(--hk-red);
+            color: var(--white);
+            border-color: var(--hk-red);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem 0.5rem;
+            }
+
+            header {
+                padding: 2rem 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .methods {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.875rem;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .week-label {
+                min-width: 150px;
+                font-size: 0.875rem;
+            }
+
+            .hours-input {
+                max-width: 100px;
+                padding: 0.5rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .legend {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .language-switcher {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 1rem;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="zh-hk">繁</button>
+        <button class="lang-btn" data-lang="zh-cn">简</button>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 data-i18n="title">Hong Kong 468 Rule Calculator</h1>
+            <p class="subtitle" data-i18n="subtitle">Employment Contract Benefits Eligibility Tool</p>
+            
+            <div class="explanation">
+                <h2 data-i18n="understanding-title">Understanding the 468 Rule</h2>
+                <p data-i18n="understanding-desc">Under the Employment Ordinance amendments (effective January 18, 2026), employees can qualify for continuous contract benefits through either of two methods:</p>
+                
+                <div class="methods">
+                    <div class="method-card">
+                        <h3 data-i18n="method1-title">Method 1: Weekly Hours</h3>
+                        <p data-i18n="method1-desc"><strong>17+ hours per week</strong> for 4 consecutive weeks qualifies you for continuous employment benefits.</p>
+                    </div>
+                    <div class="method-card">
+                        <h3 data-i18n="method2-title">Method 2: Aggregate Hours</h3>
+                        <p data-i18n="method2-desc"><strong>68+ total hours</strong> over any 4 consecutive weeks qualifies you for continuous employment benefits.</p>
+                    </div>
+                </div>
+                
+                <p data-i18n="instruction">Enter your working hours for each week below to see if and when you qualify for continuous employment contract benefits.</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="calculator-header">
+                <h2 data-i18n="calculator-title">Weekly Hours Calculator</h2>
+                <p class="calculator-subtitle" data-i18n="calculator-subtitle">Enter hours worked for each week (0-168 hours). Complete weeks sequentially.</p>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #d1fae5; border: 1px solid #a7f3d0;"></div>
+                    <span data-i18n="legend-qualified">Qualified for Benefits</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #fee2e2; border: 1px solid #fecaca;"></div>
+                    <span data-i18n="legend-not-qualified">Not Qualified</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #f3f4f6; border: 1px solid #d1d5db;"></div>
+                    <span data-i18n="legend-pending">Pending Input</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="calculator-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="table-week">Week</th>
+                            <th data-i18n="table-hours">Hours Worked</th>
+                            <th data-i18n="table-status">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="week-rows">
+                        <!-- Dynamically generated rows -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="controls">
+                <button id="calculate-btn" class="btn btn-primary" data-i18n="btn-calculate">Calculate Results</button>
+                <button id="reset-btn" class="btn btn-secondary" data-i18n="btn-reset">Reset Form</button>
+            </div>
+
+            <div id="summary-results" class="results-summary" style="display: none;">
+                <h3 data-i18n="summary-title">Qualification Summary</h3>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <h4 data-i18n="summary-weeks-completed">Weeks Completed</h4>
+                        <div class="value" id="weeks-completed">0</div>
+                        <div class="description" data-i18n="summary-weeks-total">of 12 weeks</div>
+                    </div>
+                    <div class="summary-card">
+                        <h4 data-i18n="summary-qualified-weeks">Qualified Weeks</h4>
+                        <div class="value" id="qualified-weeks">0</div>
+                        <div class="description" data-i18n="summary-qualified-desc">weeks qualifying for benefits</div>
+                    </div>
+                    <div class="summary-card">
+                        <h4 data-i18n="summary-first-qualification">First Qualification</h4>
+                        <div class="value" id="first-qualification">--</div>
+                        <div class="description" data-i18n="summary-first-desc">week first qualified</div>
+                    </div>
+                </div>
+                <div id="qualification-status" class="qualification-status">
+                    <!-- Status will be updated dynamically -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Global state
+        let currentLanguage = 'en';
+        let weekData = [];
+        let calculationResults = [];
+
+        // Translations
+        const translations = {
+            'en': {
+                'title': 'Hong Kong 468 Rule Calculator',
+                'subtitle': 'Employment Contract Benefits Eligibility Tool',
+                'understanding-title': 'Understanding the 468 Rule',
+                'understanding-desc': 'Under the Employment Ordinance amendments (effective January 18, 2026), employees can qualify for continuous contract benefits through either of two methods:',
+                'method1-title': 'Method 1: Weekly Hours',
+                'method1-desc': '<strong>17+ hours per week</strong> for 4 consecutive weeks qualifies you for continuous employment benefits.',
+                'method2-title': 'Method 2: Aggregate Hours',
+                'method2-desc': '<strong>68+ total hours</strong> over any 4 consecutive weeks qualifies you for continuous employment benefits.',
+                'instruction': 'Enter your working hours for each week below to see if and when you qualify for continuous employment contract benefits.',
+                'calculator-title': 'Weekly Hours Calculator',
+                'calculator-subtitle': 'Enter hours worked for each week (0-168 hours). Complete weeks sequentially.',
+                'legend-qualified': 'Qualified for Benefits',
+                'legend-not-qualified': 'Not Qualified',
+                'legend-pending': 'Pending Input',
+                'table-week': 'Week',
+                'table-hours': 'Hours Worked',
+                'table-status': 'Status',
+                'btn-calculate': 'Calculate Results',
+                'btn-reset': 'Reset Form',
+                'summary-title': 'Qualification Summary',
+                'summary-weeks-completed': 'Weeks Completed',
+                'summary-weeks-total': 'of 12 weeks',
+                'summary-qualified-weeks': 'Qualified Weeks',
+                'summary-qualified-desc': 'weeks qualifying for benefits',
+                'summary-first-qualification': 'First Qualification',
+                'summary-first-desc': 'week first qualified',
+                'status-qualified': 'Qualified',
+                'status-not-qualified': 'Not Qualified',
+                'status-pending': 'Pending',
+                'week-label': 'Working hours of the {ordinal} week',
+                'qualified-message': '✅ Congratulations! You qualify for continuous employment benefits',
+                'not-qualified-message': '❌ Based on current hours, you do not qualify for continuous employment benefits yet',
+                'pending-message': '⏳ Enter at least 4 weeks of data to determine qualification status'
+            },
+            'zh-hk': {
+                'title': '香港468規則計算器',
+                'subtitle': '僱傭合約福利資格工具',
+                'understanding-title': '了解468規則',
+                'understanding-desc': '根據《僱傭條例》修訂（2026年1月18日生效），僱員可透過以下兩種方法之一符合連續性合約福利資格：',
+                'method1-title': '方法一：每週工時',
+                'method1-desc': '連續4週<strong>每週工作17小時或以上</strong>，即符合連續性僱傭福利資格。',
+                'method2-title': '方法二：總計工時',
+                'method2-desc': '任何連續4週內<strong>總計工作68小時或以上</strong>，即符合連續性僱傭福利資格。',
+                'instruction': '請在下方輸入每週工作時數，查看您是否及何時符合連續性僱傭合約福利資格。',
+                'calculator-title': '每週工時計算器',
+                'calculator-subtitle': '請輸入每週工作時數（0-168小時）。請按順序完成各週。',
+                'legend-qualified': '符合福利資格',
+                'legend-not-qualified': '不符合資格',
+                'legend-pending': '待輸入',
+                'table-week': '週次',
+                'table-hours': '工作時數',
+                'table-status': '狀態',
+                'btn-calculate': '計算結果',
+                'btn-reset': '重設表格',
+                'summary-title': '資格摘要',
+                'summary-weeks-completed': '已完成週數',
+                'summary-weeks-total': '共12週',
+                'summary-qualified-weeks': '符合資格週數',
+                'summary-qualified-desc': '符合福利資格的週數',
+                'summary-first-qualification': '首次符合資格',
+                'summary-first-desc': '首次符合資格的週次',
+                'status-qualified': '符合資格',
+                'status-not-qualified': '不符合資格',
+                'status-pending': '待定',
+                'week-label': '第{ordinal}週工作時數',
+                'qualified-message': '✅ 恭喜！您符合連續性僱傭福利資格',
+                'not-qualified-message': '❌ 根據目前工時，您暫未符合連續性僱傭福利資格',
+                'pending-message': '⏳ 請輸入至少4週數據以確定資格狀態'
+            },
+            'zh-cn': {
+                'title': '香港468规则计算器',
+                'subtitle': '雇佣合同福利资格工具',
+                'understanding-title': '了解468规则',
+                'understanding-desc': '根据《雇佣条例》修订（2026年1月18日生效），雇员可通过以下两种方法之一符合连续性合同福利资格：',
+                'method1-title': '方法一：每周工时',
+                'method1-desc': '连续4周<strong>每周工作17小时或以上</strong>，即符合连续性雇佣福利资格。',
+                'method2-title': '方法二：总计工时',
+                'method2-desc': '任何连续4周内<strong>总计工作68小时或以上</strong>，即符合连续性雇佣福利资格。',
+                'instruction': '请在下方输入每周工作时数，查看您是否及何时符合连续性雇佣合同福利资格。',
+                'calculator-title': '每周工时计算器',
+                'calculator-subtitle': '请输入每周工作时数（0-168小时）。请按顺序完成各周。',
+                'legend-qualified': '符合福利资格',
+                'legend-not-qualified': '不符合资格',
+                'legend-pending': '待输入',
+                'table-week': '周次',
+                'table-hours': '工作时数',
+                'table-status': '状态',
+                'btn-calculate': '计算结果',
+                'btn-reset': '重置表格',
+                'summary-title': '资格摘要',
+                'summary-weeks-completed': '已完成周数',
+                'summary-weeks-total': '共12周',
+                'summary-qualified-weeks': '符合资格周数',
+                'summary-qualified-desc': '符合福利资格的周数',
+                'summary-first-qualification': '首次符合资格',
+                'summary-first-desc': '首次符合资格的周次',
+                'status-qualified': '符合资格',
+                'status-not-qualified': '不符合资格',
+                'status-pending': '待定',
+                'week-label': '第{ordinal}周工作时数',
+                'qualified-message': '✅ 恭喜！您符合连续性雇佣福利资格',
+                'not-qualified-message': '❌ 根据目前工时，您暂未符合连续性雇佣福利资格',
+                'pending-message': '⏳ 请输入至少4周数据以确定资格状态'
+            }
+        };
+
+        // Error messages
+        const errorMessages = {
+            'en': {
+                INVALID_NUMBER: "Please enter a valid number of hours",
+                EXCEEDS_LIMIT: "Hours cannot exceed 168 per week",
+                NEGATIVE_VALUE: "Hours cannot be negative",
+                SEQUENTIAL_ERROR: "Please complete previous weeks first"
+            },
+            'zh-hk': {
+                INVALID_NUMBER: "請輸入有效的工作時數",
+                EXCEEDS_LIMIT: "每週工時不能超過168小時",
+                NEGATIVE_VALUE: "工時不能為負數",
+                SEQUENTIAL_ERROR: "請先完成前面的週次"
+            },
+            'zh-cn': {
+                INVALID_NUMBER: "请输入有效的工作时数",
+                EXCEEDS_LIMIT: "每周工时不能超过168小时",
+                NEGATIVE_VALUE: "工时不能为负数",
+                SEQUENTIAL_ERROR: "请先完成前面的周次"
+            }
+        };
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTable();
+            attachEventListeners();
+            initializeLanguageSwitcher();
+        });
+
+        function initializeLanguageSwitcher() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            langButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                });
+            });
+        }
+
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang="${lang}"]`).classList.add('active');
+            
+            // Update all translatable elements
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            
+            // Update page title and meta description
+            document.getElementById('page-title').textContent = translations[lang]['title'];
+            document.getElementById('page-description').setAttribute('content', translations[lang]['subtitle']);
+            
+            // Update week labels
+            updateWeekLabels();
+            
+            // Update status badges
+            updateStatusBadges();
+            
+            // Update qualification status if visible
+            const summaryResults = document.getElementById('summary-results');
+            if (summaryResults.style.display !== 'none') {
+                displayResults();
+            }
+        }
+
+        function updateWeekLabels() {
+            for (let i = 1; i <= 12; i++) {
+                const weekLabel = document.querySelector(`#week-rows tr:nth-child(${i}) .week-label`);
+                if (weekLabel) {
+                    const ordinal = getOrdinal(i);
+                    weekLabel.textContent = translations[currentLanguage]['week-label'].replace('{ordinal}', ordinal);
+                }
+            }
+        }
+
+        function updateStatusBadges() {
+            for (let i = 1; i <= 12; i++) {
+                const statusElement = document.getElementById(`status-${i}`);
+                if (statusElement) {
+                    const currentStatus = statusElement.classList.contains('status-fulfilled') ? 'qualified' :
+                                        statusElement.classList.contains('status-not-fulfilled') ? 'not-qualified' : 'pending';
+                    const statusKey = `status-${currentStatus}`;
+                    statusElement.textContent = translations[currentLanguage][statusKey];
+                }
+            }
+        }
+
+        function initializeTable() {
+            const tbody = document.getElementById('week-rows');
+            
+            for (let i = 1; i <= 12; i++) {
+                const row = createWeekRow(i);
+                tbody.appendChild(row);
+            }
+            
+            // Initialize week data array
+            weekData = new Array(12).fill(null);
+            
+            // Enable first week input
+            document.getElementById('week-1').disabled = false;
+        }
+
+        function createWeekRow(weekNumber) {
+            const row = document.createElement('tr');
+            const ordinal = getOrdinal(weekNumber);
+            row.innerHTML = `
+                <td class="week-label">${translations[currentLanguage]['week-label'].replace('{ordinal}', ordinal)}</td>
+                <td>
+                    <input 
+                        type="number" 
+                        id="week-${weekNumber}" 
+                        class="hours-input" 
+                        min="0" 
+                        max="168" 
+                        step="0.5" 
+                        placeholder="0.0"
+                        disabled
+                        data-week="${weekNumber}"
+                    />
+                    <span class="error-message" id="error-${weekNumber}"></span>
+                </td>
+                <td>
+                    <span class="status-badge status-pending" id="status-${weekNumber}">${translations[currentLanguage]['status-pending']}</span>
+                </td>
+            `;
+            return row;
+        }
+
+        function getOrdinal(number) {
+            if (currentLanguage === 'en') {
+                const suffixes = ['th', 'st', 'nd', 'rd'];
+                const value = number % 100;
+                return number + (suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0]);
+            } else if (currentLanguage === 'zh-hk') {
+                const chineseNumbers = ['', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
+                return chineseNumbers[number] || number.toString();
+            } else if (currentLanguage === 'zh-cn') {
+                const chineseNumbers = ['', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二'];
+                return chineseNumbers[number] || number.toString();
+            }
+            return number.toString();
+        }
+
+        function attachEventListeners() {
+            document.getElementById('calculate-btn').addEventListener('click', calculate468Rule);
+            document.getElementById('reset-btn').addEventListener('click', resetForm);
+            
+            // Attach input validation to each week input
+            for (let i = 1; i <= 12; i++) {
+                const input = document.getElementById(`week-${i}`);
+                input.addEventListener('input', function() {
+                    validateAndUpdateWeek(i);
+                });
+                input.addEventListener('blur', function() {
+                    validateInput(i);
+                });
+            }
+        }
+
+        function validateAndUpdateWeek(weekNumber) {
+            const input = document.getElementById(`week-${weekNumber}`);
+            const value = input.value.trim();
+            
+            // Clear previous error
+            clearError(weekNumber);
+            
+            if (value === '') {
+                weekData[weekNumber - 1] = null;
+                updateWeekStatus(weekNumber, 'pending');
+                disableSubsequentWeeks(weekNumber);
+                return;
+            }
+            
+            const hours = parseFloat(value);
+            
+            if (isNaN(hours)) {
+                showError(weekNumber, errorMessages[currentLanguage].INVALID_NUMBER);
+                return;
+            }
+            
+            if (hours < 0) {
+                showError(weekNumber, errorMessages[currentLanguage].NEGATIVE_VALUE);
+                return;
+            }
+            
+            if (hours > 168) {
+                showError(weekNumber, errorMessages[currentLanguage].EXCEEDS_LIMIT);
+                return;
+            }
+            
+            // Valid input
+            weekData[weekNumber - 1] = hours;
+            calculateWeekStatus(weekNumber);
+            enableNextWeek(weekNumber);
+        }
+
+        function validateInput(weekNumber) {
+            const input = document.getElementById(`week-${weekNumber}`);
+            const value = input.value.trim();
+            
+            if (value !== '' && weekData[weekNumber - 1] === null) {
+                input.classList.add('error');
+            } else {
+                input.classList.remove('error');
+            }
+        }
+
+        function calculateWeekStatus(weekNumber) {
+            if (weekNumber < 4) {
+                // Need at least 4 weeks to determine status
+                updateWeekStatus(weekNumber, 'not-fulfilled');
+                return;
+            }
+            
+            // Don't update individual week status here - will be handled in calculate468Rule
+            // This prevents premature status updates
+        }
+
+        function checkWeekQualification(weekIndex) {
+            if (weekIndex < 3) return false; // Need at least 4 weeks
+            
+            // Method 1: Check if last 4 weeks all have 17+ hours
+            let consecutiveWeeks = true;
+            let totalHours = 0;
+            
+            for (let i = weekIndex - 3; i <= weekIndex; i++) {
+                if (weekData[i] === null) return false;
+                
+                totalHours += weekData[i];
+                if (weekData[i] < 17) {
+                    consecutiveWeeks = false;
+                }
+            }
+            
+            // Method 1: 4 consecutive weeks with 17+ hours each
+            if (consecutiveWeeks) return true;
+            
+            // Method 2: 68+ total hours over 4 consecutive weeks
+            if (totalHours >= 68) return true;
+            
+            return false;
+        }
+
+        function updateWeekStatus(weekNumber, status) {
+            const statusElement = document.getElementById(`status-${weekNumber}`);
+            const statusKey = `status-${status === 'fulfilled' ? 'qualified' : status === 'not-fulfilled' ? 'not-qualified' : 'pending'}`;
+            
+            statusElement.className = `status-badge status-${status}`;
+            statusElement.textContent = translations[currentLanguage][statusKey];
+        }
+
+        function enableNextWeek(weekNumber) {
+            if (weekNumber < 12 && weekData[weekNumber - 1] !== null) {
+                const nextInput = document.getElementById(`week-${weekNumber + 1}`);
+                if (nextInput) {
+                    nextInput.disabled = false;
+                }
+            }
+        }
+
+        function disableSubsequentWeeks(fromWeek) {
+            for (let i = fromWeek + 1; i <= 12; i++) {
+                const input = document.getElementById(`week-${i}`);
+                if (input) {
+                    input.disabled = true;
+                    input.value = '';
+                    weekData[i - 1] = null;
+                    updateWeekStatus(i, 'pending');
+                }
+            }
+        }
+
+        function showError(weekNumber, message) {
+            const errorElement = document.getElementById(`error-${weekNumber}`);
+            const inputElement = document.getElementById(`week-${weekNumber}`);
+            
+            errorElement.textContent = message;
+            inputElement.classList.add('error');
+        }
+
+        function clearError(weekNumber) {
+            const errorElement = document.getElementById(`error-${weekNumber}`);
+            const inputElement = document.getElementById(`week-${weekNumber}`);
+            
+            errorElement.textContent = '';
+            inputElement.classList.remove('error');
+        }
+
+        function calculate468Rule() {
+            // Reset all statuses first
+            for (let i = 4; i <= 12; i++) {
+                if (weekData[i - 1] !== null) {
+                    updateWeekStatus(i, 'not-fulfilled');
+                }
+            }
+            
+            // Mark all qualifying 4-week periods
+            markQualifyingPeriods();
+            
+            displayResults();
+        }
+
+        function markQualifyingPeriods() {
+            // Check each possible 4-week period
+            for (let endWeek = 4; endWeek <= 12; endWeek++) {
+                const endIndex = endWeek - 1; // Convert to 0-based index
+                
+                // Skip if any week in the 4-week period is null
+                let hasAllData = true;
+                for (let i = endIndex - 3; i <= endIndex; i++) {
+                    if (weekData[i] === null) {
+                        hasAllData = false;
+                        break;
+                    }
+                }
+                
+                if (!hasAllData) continue;
+                
+                // Check Method 1: All 4 weeks have 17+ hours
+                let allWeeksAbove17 = true;
+                let totalHours = 0;
+                
+                for (let i = endIndex - 3; i <= endIndex; i++) {
+                    totalHours += weekData[i];
+                    if (weekData[i] < 17) {
+                        allWeeksAbove17 = false;
+                    }
+                }
+                
+                // Check Method 2: Total hours >= 68
+                const totalAbove68 = totalHours >= 68;
+                
+                // If either method qualifies, mark all 4 weeks as fulfilled
+                if (allWeeksAbove17 || totalAbove68) {
+                    for (let i = endIndex - 3; i <= endIndex; i++) {
+                        const weekNumber = i + 1; // Convert back to 1-based
+                        updateWeekStatus(weekNumber, 'fulfilled');
+                    }
+                }
+            }
+        }
+
+        function displayResults() {
+            const summaryElement = document.getElementById('summary-results');
+            const weeksCompletedElement = document.getElementById('weeks-completed');
+            const qualifiedWeeksElement = document.getElementById('qualified-weeks');
+            const firstQualificationElement = document.getElementById('first-qualification');
+            const qualificationStatusElement = document.getElementById('qualification-status');
+            
+            // Calculate summary statistics
+            const completedWeeks = weekData.filter(week => week !== null).length;
+            let qualifiedWeeks = 0;
+            let firstQualificationWeek = null;
+            
+            for (let i = 3; i < 12; i++) { // Start from week 4 (index 3)
+                if (weekData[i] !== null && checkWeekQualification(i)) {
+                    qualifiedWeeks++;
+                    if (firstQualificationWeek === null) {
+                        firstQualificationWeek = i + 1; // Convert to 1-based
+                    }
+                }
+            }
+            
+            // Update summary cards
+            weeksCompletedElement.textContent = completedWeeks;
+            qualifiedWeeksElement.textContent = qualifiedWeeks;
+            firstQualificationElement.textContent = firstQualificationWeek ? `Week ${firstQualificationWeek}` : '--';
+            
+            // Update qualification status
+            if (qualifiedWeeks > 0) {
+                qualificationStatusElement.className = 'qualification-status qualified';
+                let message = translations[currentLanguage]['qualified-message'];
+                if (firstQualificationWeek) {
+                    const weekText = currentLanguage === 'en' ? `starting from Week ${firstQualificationWeek}` :
+                                   currentLanguage === 'zh-hk' ? `由第${getOrdinal(firstQualificationWeek)}週開始` :
+                                   `从第${getOrdinal(firstQualificationWeek)}周开始`;
+                    message += `<br>${weekText}`;
+                }
+                qualificationStatusElement.innerHTML = message;
+            } else if (completedWeeks >= 4) {
+                qualificationStatusElement.className = 'qualification-status not-qualified';
+                qualificationStatusElement.innerHTML = translations[currentLanguage]['not-qualified-message'];
+            } else {
+                qualificationStatusElement.className = 'qualification-status not-qualified';
+                qualificationStatusElement.innerHTML = translations[currentLanguage]['pending-message'];
+            }
+            
+            // Show results with animation
+            summaryElement.style.display = 'block';
+            summaryElement.classList.add('fade-in');
+            
+            // Scroll to results
+            summaryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function resetForm() {
+            // Clear all inputs
+            for (let i = 1; i <= 12; i++) {
+                const input = document.getElementById(`week-${i}`);
+                input.value = '';
+                input.disabled = i > 1; // Only enable first week
+                input.classList.remove('error');
+                
+                clearError(i);
+                updateWeekStatus(i, 'pending');
+            }
+            
+            // Reset week data
+            weekData = new Array(12).fill(null);
+            
+            // Hide results
+            document.getElementById('summary-results').style.display = 'none';
+            
+            // Enable first week
+            document.getElementById('week-1').disabled = false;
+        }
+    </script>
+</body>
+</html>
