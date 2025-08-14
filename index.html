@@ -16,6 +16,8 @@
             --hk-red: #d42c2c;
             --hk-red-light: #e85555;
             --hk-red-dark: #b91c1c;
+            --hk-yellow: #f7e600;
+            --hk-yellow-light: #fff3cd;
             --success-green: #059669;
             --success-green-light: #10b981;
             --warning-orange: #d97706;
@@ -31,6 +33,7 @@
             --gray-800: #1f2937;
             --gray-900: #111827;
             --white: #ffffff;
+            --light-blue: #e3f2fd;
         }
 
         body {
@@ -41,104 +44,211 @@
             min-height: 100vh;
         }
 
-        .container {
+        .page-header {
+            background: var(--white);
+            border-bottom: 3px solid var(--hk-red);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem 1rem;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            background: var(--white);
-            padding: 3rem 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--hk-red);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 24px;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
+        .header-title {
+            font-size: 1.75rem;
+            font-weight: 700;
             color: var(--hk-red);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--gray-600);
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .explanation {
-            text-align: left;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .explanation h2 {
-            font-size: 1.5rem;
-            color: var(--gray-800);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .explanation p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: var(--gray-700);
-        }
-
-        .methods {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .method-card {
-            background: var(--gray-50);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border-left: 4px solid var(--hk-red);
-        }
-
-        .method-card h3 {
-            font-size: 1.25rem;
-            color: var(--hk-red);
-            margin-bottom: 0.75rem;
-            font-weight: 600;
-        }
-
-        .method-card p {
-            font-size: 1rem;
-            color: var(--gray-700);
             margin: 0;
         }
 
-        main {
-            background: var(--white);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem 2rem;
         }
 
-        .calculator-header {
-            text-align: center;
+        .intro-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+
+        .intro-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--gray-700);
+            margin-bottom: 1.5rem;
+        }
+
+        .notice-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .notice-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 0.75rem;
+        }
+
+        .notice-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--gray-700);
+            margin-bottom: 1rem;
+        }
+
+        .contact-info {
+            font-size: 0.95rem;
+            color: var(--gray-700);
+            margin-bottom: 1rem;
+        }
+
+        .disclaimer {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .disclaimer input[type="checkbox"] {
+            margin-top: 0.25rem;
+        }
+
+        .form-section {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--hk-yellow);
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .form-content {
+            padding: 2rem;
+        }
+
+        .form-group {
             margin-bottom: 2rem;
         }
 
-        .calculator-header h2 {
-            font-size: 1.875rem;
+        .form-label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
             color: var(--gray-800);
-            margin-bottom: 0.5rem;
-            font-weight: 700;
+            margin-bottom: 1rem;
         }
 
-        .calculator-subtitle {
-            color: var(--gray-600);
-            font-size: 1.1rem;
+        .radio-group {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .radio-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--hk-red);
+        }
+
+        .radio-option label {
+            font-size: 1rem;
+            color: var(--gray-700);
+            cursor: pointer;
+        }
+
+        .date-input-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .date-input {
+            padding: 0.75rem;
+            border: 2px solid var(--gray-300);
+            border-radius: 4px;
+            font-size: 1rem;
+            width: 200px;
+        }
+
+        .date-input:focus {
+            outline: none;
+            border-color: var(--hk-red);
+        }
+
+        .calendar-icon {
+            background: var(--gray-200);
+            border: 1px solid var(--gray-300);
+            padding: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .next-step-btn {
+            background: linear-gradient(135deg, #9c27b0, #673ab7);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: auto;
+            transition: all 0.2s ease;
+        }
+
+        .next-step-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(156, 39, 176, 0.3);
+        }
+
+        .calculator-section {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+            display: none;
         }
 
         .table-container {
@@ -508,10 +618,36 @@
                 margin-bottom: 1rem;
                 justify-content: center;
             }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .date-input-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .next-step-btn {
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="page-header">
+        <div class="header-content">
+            <div class="header-icon">📊</div>
+            <h1 class="header-title" data-i18n="title">法定僱傭權益參考計算機</h1>
+        </div>
+    </div>
+
     <div class="language-switcher">
         <button class="lang-btn active" data-lang="en">EN</button>
         <button class="lang-btn" data-lang="zh-hk">繁</button>
@@ -519,32 +655,77 @@
     </div>
 
     <div class="container">
-        <header>
-            <h1 data-i18n="title">Hong Kong 468 Rule Calculator</h1>
-            <p class="subtitle" data-i18n="subtitle">Employment Contract Benefits Eligibility Tool</p>
-            
-            <div class="explanation">
-                <h2 data-i18n="understanding-title">Understanding the 468 Rule</h2>
-                <p data-i18n="understanding-desc">Under the Employment Ordinance amendments (effective January 18, 2026), employees can qualify for continuous contract benefits through either of two methods:</p>
-                
-                <div class="methods">
-                    <div class="method-card">
-                        <h3 data-i18n="method1-title">Method 1: Weekly Hours</h3>
-                        <p data-i18n="method1-desc"><strong>17+ hours per week</strong> for 4 consecutive weeks qualifies you for continuous employment benefits.</p>
-                    </div>
-                    <div class="method-card">
-                        <h3 data-i18n="method2-title">Method 2: Aggregate Hours</h3>
-                        <p data-i18n="method2-desc"><strong>68+ total hours</strong> over any 4 consecutive weeks qualifies you for continuous employment benefits.</p>
+        <div class="intro-section">
+            <p class="intro-text" data-i18n="intro-text">
+                法定僱傭權益參考計算機程式，旨在提供一個簡便的工具，協助僱主及僱員根據《僱傭條例》初步計算僱傭權益，以作參考之用。輸入全部所需資料後，按「計算」按鈕，程式便會計算僱員根據《僱傭條例》可享有的僱傭權益及相關金額。
+            </p>
+
+            <div class="notice-section">
+                <h3 class="notice-title" data-i18n="notice-title">注意</h3>
+                <p class="notice-text" data-i18n="notice-text">
+                    本計算機程式是基於《僱傭條例》下法定權益的相關條文、使用者輸入的資料，及一些假設狀況作運算，計算結果只供初步參考。精確的法定僱傭權益計算，需要考慮僱傭合約內的條款以及個別個案的實際情況，而這些因素會因應個別個案而有所不同，故此可能未完全反映在此計算機程式的計算之內。勞工處對於因這些資料內容或因使用這些資料所引致的任何損失，一概不負任何責任。此計算機程式所提供的資料，不應被視用在任何法律程序上，或被視為申索的證據。
+                </p>
+                <p class="contact-info" data-i18n="contact-info">
+                    有關計算法定僱傭權益的詳情，請參閱《僱傭條例簡明指南》或致電 24 小時查詢熱線 2717 1771（由「1823」接聽），你亦可瀏覽到勞工處勞資關係科的分區辦事處查詢，請按此查閱各分區辦事處的地址。
+                </p>
+                <div class="disclaimer">
+                    <input type="checkbox" id="agree-checkbox">
+                    <label for="agree-checkbox" data-i18n="disclaimer">本人已閱讀、明白及同意上述內容。</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-header" data-i18n="basic-info">基本資料</div>
+            <div class="form-content">
+                <div class="form-group">
+                    <label class="form-label" data-i18n="continuous-contract-question">是否按連續性合約受僱？（註）</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="continuous-yes" name="continuous-contract" value="yes">
+                            <label for="continuous-yes" data-i18n="yes">是</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="continuous-no" name="continuous-contract" value="no">
+                            <label for="continuous-no" data-i18n="no">否</label>
+                        </div>
                     </div>
                 </div>
-                
-                <p data-i18n="instruction">Enter your working hours for each week below to see if and when you qualify for continuous employment contract benefits.</p>
-            </div>
-        </header>
 
-        <main>
+                <div class="form-group">
+                    <label class="form-label" data-i18n="part-time-question">是否兼職在職？</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="parttime-yes" name="part-time" value="yes">
+                            <label for="parttime-yes" data-i18n="yes">是</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="parttime-no" name="part-time" value="no">
+                            <label for="parttime-no" data-i18n="no">否</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" data-i18n="start-date-question">開始受僱日：（註）</label>
+                    <div class="date-input-group">
+                        <input type="date" class="date-input" id="employment-start-date">
+                        <div class="calendar-icon">📅</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 2rem;">
+                    <button class="next-step-btn" id="next-step-btn" data-i18n="next-step">
+                        ▶ 下一步
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-section" id="calculator-section">
+            <div class="section-header" data-i18n="hours-calculator">工時計算器</div>
             <div class="calculator-header">
-                <h2 data-i18n="calculator-title">Weekly Hours Calculator</h2>
+                <h2 data-i18n="calculator-title">每週工時計算器</h2>
                 <p class="calculator-subtitle" data-i18n="calculator-subtitle">Enter hours worked for each week (0-168 hours). Complete weeks sequentially.</p>
             </div>
 
@@ -606,7 +787,7 @@
                     <!-- Status will be updated dynamically -->
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 
     <script>
@@ -654,14 +835,19 @@
             },
             'zh-hk': {
                 'title': '香港468規則計算器',
-                'subtitle': '僱傭合約福利資格工具',
-                'understanding-title': '了解468規則',
-                'understanding-desc': '根據《僱傭條例》修訂（2026年1月18日生效），僱員可透過以下兩種方法之一符合連續性合約福利資格：',
-                'method1-title': '方法一：每週工時',
-                'method1-desc': '連續4週<strong>每週工作17小時或以上</strong>，即符合連續性僱傭福利資格。',
-                'method2-title': '方法二：總計工時',
-                'method2-desc': '任何連續4週內<strong>總計工作68小時或以上</strong>，即符合連續性僱傭福利資格。',
-                'instruction': '請在下方輸入每週工作時數，查看您是否及何時符合連續性僱傭合約福利資格。',
+                'intro-text': '法定僱傭權益參考計算機程式，旨在提供一個簡便的工具，協助僱主及僱員根據《僱傭條例》初步計算僱傭權益，以作參考之用。輸入全部所需資料後，按「計算」按鈕，程式便會計算僱員根據《僱傭條例》可享有的僱傭權益及相關金額。',
+                'notice-title': '注意',
+                'notice-text': '本計算機程式是基於《僱傭條例》下法定權益的相關條文、使用者輸入的資料，及一些假設狀況作運算，計算結果只供初步參考。精確的法定僱傭權益計算，需要考慮僱傭合約內的條款以及個別個案的實際情況，而這些因素會因應個別個案而有所不同，故此可能未完全反映在此計算機程式的計算之內。勞工處對於因這些資料內容或因使用這些資料所引致的任何損失，一概不負任何責任。此計算機程式所提供的資料，不應被視用在任何法律程序上，或被視為申索的證據。',
+                'contact-info': '有關計算法定僱傭權益的詳情，請參閱《僱傭條例簡明指南》或致電 24 小時查詢熱線 2717 1771（由「1823」接聽），你亦可瀏覽到勞工處勞資關係科的分區辦事處查詢，請按此查閱各分區辦事處的地址。',
+                'disclaimer': '本人已閱讀、明白及同意上述內容。',
+                'basic-info': '基本資料',
+                'continuous-contract-question': '是否按連續性合約受僱？（註）',
+                'part-time-question': '是否兼職在職？',
+                'start-date-question': '開始受僱日：（註）',
+                'yes': '是',
+                'no': '否',
+                'next-step': '▶ 下一步',
+                'hours-calculator': '工時計算器',
                 'calculator-title': '每週工時計算器',
                 'calculator-subtitle': '請輸入每週工作時數（0-168小時）。請按順序完成各週。',
                 'legend-qualified': '符合福利資格',
@@ -689,14 +875,19 @@
             },
             'zh-cn': {
                 'title': '香港468规则计算器',
-                'subtitle': '雇佣合同福利资格工具',
-                'understanding-title': '了解468规则',
-                'understanding-desc': '根据《雇佣条例》修订（2026年1月18日生效），雇员可通过以下两种方法之一符合连续性合同福利资格：',
-                'method1-title': '方法一：每周工时',
-                'method1-desc': '连续4周<strong>每周工作17小时或以上</strong>，即符合连续性雇佣福利资格。',
-                'method2-title': '方法二：总计工时',
-                'method2-desc': '任何连续4周内<strong>总计工作68小时或以上</strong>，即符合连续性雇佣福利资格。',
-                'instruction': '请在下方输入每周工作时数，查看您是否及何时符合连续性雇佣合同福利资格。',
+                'intro-text': '法定雇佣权益参考计算机程式，旨在提供一个简便的工具，协助雇主及雇员根据《雇佣条例》初步计算雇佣权益，以作参考之用。输入全部所需资料后，按「计算」按钮，程式便会计算雇员根据《雇佣条例》可享有的雇佣权益及相关金额。',
+                'notice-title': '注意',
+                'notice-text': '本计算机程式是基于《雇佣条例》下法定权益的相关条文、使用者输入的资料，及一些假设状况作运算，计算结果只供初步参考。精确的法定雇佣权益计算，需要考虑雇佣合约内的条款以及个别个案的实际情况，而这些因素会因应个别个案而有所不同，故此可能未完全反映在此计算机程式的计算之内。劳工处对于因这些资料内容或因使用这些资料所引致的任何损失，一概不负任何责任。此计算机程式所提供的资料，不应被视用在任何法律程序上，或被视为申索的证据。',
+                'contact-info': '有关计算法定雇佣权益的详情，请参阅《雇佣条例简明指南》或致电 24 小时查询热线 2717 1771（由「1823」接听），你亦可浏览到劳工处劳资关系科的分区办事处查询，请按此查阅各分区办事处的地址。',
+                'disclaimer': '本人已阅读、明白及同意上述内容。',
+                'basic-info': '基本资料',
+                'continuous-contract-question': '是否按连续性合约受雇？（注）',
+                'part-time-question': '是否兼职在职？',
+                'start-date-question': '开始受雇日：（注）',
+                'yes': '是',
+                'no': '否',
+                'next-step': '▶ 下一步',
+                'hours-calculator': '工时计算器',
                 'calculator-title': '每周工时计算器',
                 'calculator-subtitle': '请输入每周工作时数（0-168小时）。请按顺序完成各周。',
                 'legend-qualified': '符合福利资格',
@@ -748,10 +939,42 @@
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
+            initializeFormHandlers();
             initializeTable();
             attachEventListeners();
             initializeLanguageSwitcher();
         });
+
+        function initializeFormHandlers() {
+            const nextStepBtn = document.getElementById('next-step-btn');
+            const agreeCheckbox = document.getElementById('agree-checkbox');
+            
+            // Initially disable next step button
+            nextStepBtn.disabled = true;
+            nextStepBtn.style.opacity = '0.5';
+            
+            // Enable next step when checkbox is checked
+            agreeCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    nextStepBtn.disabled = false;
+                    nextStepBtn.style.opacity = '1';
+                } else {
+                    nextStepBtn.disabled = true;
+                    nextStepBtn.style.opacity = '0.5';
+                }
+            });
+            
+            // Show calculator section when next step is clicked
+            nextStepBtn.addEventListener('click', function() {
+                if (!this.disabled) {
+                    document.getElementById('calculator-section').style.display = 'block';
+                    document.getElementById('calculator-section').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }
+            });
+        }
 
         function initializeLanguageSwitcher() {
             const langButtons = document.querySelectorAll('.lang-btn');
