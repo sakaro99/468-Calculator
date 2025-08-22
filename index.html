@@ -684,7 +684,7 @@
                                max="168" 
                                step="0.5" 
                                placeholder="0.0"
-                               ${i > 1 ? 'disabled' : ''}>
+                               ${i < 4 || i > 4 ? 'disabled' : ''}>
                         <div class="error-message" id="error-${i}"></div>
                     </td>
                     <td>
@@ -900,7 +900,7 @@
                 const input = document.getElementById(`week-${i}`);
                 input.value = '';
                 input.classList.remove('error');
-                input.disabled = i > 1; // Only first week enabled
+                input.disabled = i !== 4; // Only 4th week enabled initially
                 
                 // Clear errors
                 const errorDiv = document.getElementById(`error-${i}`);
@@ -913,8 +913,8 @@
                 statusBadge.textContent = translations[currentLanguage]['status-pending'];
             }
             
-            // Enable first week
-            document.getElementById('week-1').disabled = false;
+            // Enable fourth week
+            document.getElementById('week-4').disabled = false;
             
             // Hide summary
             document.getElementById('summary-results').style.display = 'none';
