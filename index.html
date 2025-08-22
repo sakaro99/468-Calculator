@@ -807,34 +807,18 @@
             
             if (hasErrors) return;
             
-            // Reset all statuses first
+            // Check each week individually
             for (let i = 1; i <= 12; i++) {
                 if (weeks[i-1] !== null) {
+                    const status = checkWeekStatus(weeks, i-1);
                     const statusBadge = document.getElementById(`status-${i}`);
-                    statusBadge.className = 'status-badge status-not-qualified';
-                    statusBadge.textContent = langData['status-not-qualified'];
-                }
-            }
-            
-            // Check each possible 4-week period
-            for (let i = 3; i < weeks.length; i++) { // Start from index 3 (4th week)
-                if (weeks[i] !== null && weeks[i-1] !== null && weeks[i-2] !== null && weeks[i-3] !== null) {
-                    const fourWeekPeriod = [weeks[i-3], weeks[i-2], weeks[i-1], weeks[i]];
                     
-                    // Method 1: Check if all 4 weeks have 17+ hours
-                    const allAbove17 = fourWeekPeriod.every(hours => hours >= 17);
-                    
-                    // Method 2: Check if total is 68+ hours
-                    const totalHours = fourWeekPeriod.reduce((sum, hours) => sum + hours, 0);
-                    const totalAbove68 = totalHours >= 68;
-                    
-                    // If either method qualifies, mark all 4 weeks as qualified
-                    if (allAbove17 || totalAbove68) {
-                        for (let j = i-3; j <= i; j++) {
-                            const statusBadge = document.getElementById(`status-${j+1}`);
-                            statusBadge.className = 'status-badge status-qualified';
-                            statusBadge.textContent = langData['status-qualified'];
-                        }
+                    if (status === 'qualified') {
+                        statusBadge.className = 'status-badge status-qualified';
+                        statusBadge.textContent = langData['status-qualified'];
+                    } else {
+                        statusBadge.className = 'status-badge status-not-qualified';
+                        statusBadge.textContent = langData['status-not-qualified'];
                     }
                 }
             }
@@ -842,6 +826,39 @@
             displaySummary();
         }
 
+        function checkWeekStatus(weeks, currentWeekIndex) {
+            // Method 1: Check if this week is the end of 4 consecutive weeks with 17+ hours each
+            if (currentWeekIndex >= 3) {
+                let consecutiveWeeksAbove17 = true;
+                for (let i = currentWeekIndex - 3; i <= currentWeekIndex; i++) {
+                    if (!weeks[i] || parseFloat(weeks[i]) < 17) {
+                        consecutiveWeeksAbove17 = false;
+                        break;
+                    }
+                }
+                if (consecutiveWeeksAbove17) {
+                    return 'qualified';
+                }
+            }
+            
+            // Method 2: Check if this week is the end of any 4-week period with 68+ total hours
+            if (currentWeekIndex >= 3) {
+                let totalHours = 0;
+                let hasAllWeeks = true;
+                for (let i = currentWeekIndex - 3; i <= currentWeekIndex; i++) {
+                    if (!weeks[i] || weeks[i] === '') {
+                        hasAllWeeks = false;
+                        break;
+                    }
+                    totalHours += parseFloat(weeks[i]);
+                }
+                if (hasAllWeeks && totalHours >= 68) {
+                    return 'qualified';
+                }
+            }
+            
+            return 'not-qualified';
+        }
         function displaySummary() {
             const langData = translations[currentLanguage];
             let qualifiedCount = 0;
