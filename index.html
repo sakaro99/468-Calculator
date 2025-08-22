@@ -768,6 +768,57 @@
                 nextInput.disabled = false;
             }
             
+            // Dynamic enabling logic for previous rows based on < 17 hours
+            if (value !== '') {
+                const numValue = parseFloat(value);
+                if (!isNaN(numValue)) {
+                    if (weekNumber === 4 && numValue < 17) {
+                        // 4th row < 17: Enable rows 1, 2, and 3
+                        document.getElementById('week-1').disabled = false;
+                        document.getElementById('week-2').disabled = false;
+                        document.getElementById('week-3').disabled = false;
+                    } else if (weekNumber === 5 && numValue < 17) {
+                        // 5th row < 17: Enable rows 2 and 3
+                        document.getElementById('week-2').disabled = false;
+                        document.getElementById('week-3').disabled = false;
+                    } else if (weekNumber === 6 && numValue < 17) {
+                        // 6th row < 17: Enable row 3
+                        document.getElementById('week-3').disabled = false;
+                    }
+                    
+                    // If value is >= 17, disable and clear the relevant previous rows
+                    if (weekNumber === 4 && numValue >= 17) {
+                        // Disable and clear rows 1, 2, 3
+                        ['week-1', 'week-2', 'week-3'].forEach(id => {
+                            const prevInput = document.getElementById(id);
+                            prevInput.disabled = true;
+                            prevInput.value = '';
+                            const statusBadge = document.getElementById(id.replace('week-', 'status-'));
+                            statusBadge.className = 'status-badge status-pending';
+                            statusBadge.textContent = translations[currentLanguage]['status-pending'];
+                        });
+                    } else if (weekNumber === 5 && numValue >= 17) {
+                        // Disable and clear rows 2, 3
+                        ['week-2', 'week-3'].forEach(id => {
+                            const prevInput = document.getElementById(id);
+                            prevInput.disabled = true;
+                            prevInput.value = '';
+                            const statusBadge = document.getElementById(id.replace('week-', 'status-'));
+                            statusBadge.className = 'status-badge status-pending';
+                            statusBadge.textContent = translations[currentLanguage]['status-pending'];
+                        });
+                    } else if (weekNumber === 6 && numValue >= 17) {
+                        // Disable and clear row 3
+                        const prevInput = document.getElementById('week-3');
+                        prevInput.disabled = true;
+                        prevInput.value = '';
+                        const statusBadge = document.getElementById('status-3');
+                        statusBadge.className = 'status-badge status-pending';
+                        statusBadge.textContent = translations[currentLanguage]['status-pending'];
+                    }
+                }
+            }
+            
             // Disable subsequent weeks if current week is cleared
             if (value === '') {
                 for (let i = weekNumber + 1; i <= 12; i++) {
@@ -777,6 +828,34 @@
                     
                     // Reset status
                     const statusBadge = document.getElementById(`status-${i}`);
+                    statusBadge.className = 'status-badge status-pending';
+                    statusBadge.textContent = translations[currentLanguage]['status-pending'];
+                }
+                
+                // Also disable previous rows when clearing current week
+                if (weekNumber === 4) {
+                    ['week-1', 'week-2', 'week-3'].forEach(id => {
+                        const prevInput = document.getElementById(id);
+                        prevInput.disabled = true;
+                        prevInput.value = '';
+                        const statusBadge = document.getElementById(id.replace('week-', 'status-'));
+                        statusBadge.className = 'status-badge status-pending';
+                        statusBadge.textContent = translations[currentLanguage]['status-pending'];
+                    });
+                } else if (weekNumber === 5) {
+                    ['week-2', 'week-3'].forEach(id => {
+                        const prevInput = document.getElementById(id);
+                        prevInput.disabled = true;
+                        prevInput.value = '';
+                        const statusBadge = document.getElementById(id.replace('week-', 'status-'));
+                        statusBadge.className = 'status-badge status-pending';
+                        statusBadge.textContent = translations[currentLanguage]['status-pending'];
+                    });
+                } else if (weekNumber === 6) {
+                    const prevInput = document.getElementById('week-3');
+                    prevInput.disabled = true;
+                    prevInput.value = '';
+                    const statusBadge = document.getElementById('status-3');
                     statusBadge.className = 'status-badge status-pending';
                     statusBadge.textContent = translations[currentLanguage]['status-pending'];
                 }
